@@ -13,6 +13,7 @@ public class CreateAccount {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Request {
 
         @NotNull
