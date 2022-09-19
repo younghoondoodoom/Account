@@ -4,6 +4,7 @@ import static com.example.account.type.AccountStatus.IN_USE;
 
 import com.example.account.domain.Account;
 import com.example.account.domain.AccountUser;
+import com.example.account.dto.AccountDto;
 import com.example.account.exception.AccountException;
 import com.example.account.repository.AccountRepository;
 import com.example.account.repository.AccountUserRepository;
@@ -27,7 +28,7 @@ public class AccountService {
      * @param initialBalance
      */
     @Transactional
-    public Account createAccount(Long userId, Long initialBalance) {
+    public AccountDto createAccount(Long userId, Long initialBalance) {
         AccountUser accountUser = accountUserRepository.findById(userId)
             .orElseThrow(() -> new AccountException(ErrorCode.USER_NOT_FOUND));
 
@@ -36,15 +37,15 @@ public class AccountService {
                 + "")
             .orElse("1000000000");
 
-        return accountRepository.save(
-            Account.builder()
-                .accountUser(accountUser)
-                .accountStatus(IN_USE)
-                .accountNumber(newAccountNumber)
-                .balance(initialBalance)
-                .registeredAt(LocalDateTime.now())
-                .build()
-        );
-
+        return AccountDto.fromEntity(
+            accountRepository.save(
+                Account.builder()
+                    .accountUser(accountUser)
+                    .accountStatus(IN_USE)
+                    .accountNumber(newAccountNumber)
+                    .balance(initialBalance)
+                    .registeredAt(LocalDateTime.now())
+                    .build()));
     }
+
 }
