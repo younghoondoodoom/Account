@@ -11,4 +11,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findFirstByOrderByIdDesc();
 
     Integer countAccountByAccountUser(AccountUser accountUser);
+
+    Optional<Account> findByAccountNumber(String AccountNumber);
 }

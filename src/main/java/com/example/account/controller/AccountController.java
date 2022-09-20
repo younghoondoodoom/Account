@@ -1,9 +1,11 @@
 package com.example.account.controller;
 
 import com.example.account.dto.CreateAccount;
+import com.example.account.dto.DeleteAccount;
 import com.example.account.service.AccountService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,4 +25,17 @@ public class AccountController {
                 request.getUserId(),
                 request.getInitialBalance()));
     }
+
+    @DeleteMapping("/account")
+    public DeleteAccount.Response deleteAccount(
+        @RequestBody @Valid DeleteAccount.Request request
+    ) {
+        return DeleteAccount.Response.from(
+            accountService.deleteAccount(
+                request.getUserId(),
+                request.getAccountNumber()
+            )
+        );
+    }
+
 }
