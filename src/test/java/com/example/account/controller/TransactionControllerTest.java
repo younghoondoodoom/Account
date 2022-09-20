@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.account.dto.CancelBalance;
 import com.example.account.dto.TransactionDto;
 import com.example.account.dto.UseBalance;
 import com.example.account.service.TransactionService;
@@ -56,6 +57,34 @@ class TransactionControllerTest {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.accountNumber").value("1000000000"))
+            .andExpect(jsonPath("$.transactionResultType").value("S"))
+            .andExpect(jsonPath("$.transactionId").value("transactionId"))
+            .andExpect(jsonPath("$.amount").value(12345));
+    }
+
+    @Test
+    public void successCancelBalance() throws Exception {
+        //given
+        given(transactionService.cancelBalance(anyString(), anyString(), anyLong()))
+            .willReturn(TransactionDto.builder()
+                .accountNumber("0987654321")
+                .transactionAt(LocalDateTime.now())
+                .amount(12345L)
+                .transactionId("transactionId")
+                .transactionResultType(TransactionResultType.S)
+                .build());
+
+        //when
+        //then
+        mockMvc.perform(post("/transaction/cancel")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(
+                    new CancelBalance.Request("transactionId", "2000000000", 3000L)
+                ))
+            )
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.accountNumber").value("0987654321"))
             .andExpect(jsonPath("$.transactionResultType").value("S"))
             .andExpect(jsonPath("$.transactionId").value("transactionId"))
             .andExpect(jsonPath("$.amount").value(12345));
