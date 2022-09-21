@@ -1,9 +1,11 @@
 package com.example.account.controller;
 
+import static com.example.account.type.TransactionType.USE;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,7 +67,8 @@ class TransactionControllerTest {
     @Test
     public void successCancelBalance() throws Exception {
         //given
-        given(transactionService.cancelBalance(anyString(), anyString(), anyLong()))
+        given(transactionService.cancelBalance(anyString(), anyString(),
+            anyLong()))
             .willReturn(TransactionDto.builder()
                 .accountNumber("0987654321")
                 .transactionAt(LocalDateTime.now())
@@ -88,5 +91,30 @@ class TransactionControllerTest {
             .andExpect(jsonPath("$.transactionResultType").value("S"))
             .andExpect(jsonPath("$.transactionId").value("transactionId"))
             .andExpect(jsonPath("$.amount").value(12345));
+    }
+
+    @Test
+    public void successQueryTransaction() throws Exception {
+        //given
+        given(transactionService.queryTransaction(anyString()))
+            .willReturn(TransactionDto.builder()
+                .accountNumber("0987654321")
+                .transactionType(USE)
+                .transactionAt(LocalDateTime.now())
+                .amount(12345L)
+                .transactionId("transactionId")
+                .transactionResultType(TransactionResultType.S)
+                .build());
+
+        //when
+        //then
+        mockMvc.perform(get("/transaction/12345"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.accountNumber").value("0987654321"))
+            .andExpect(jsonPath("$.transactionResultType").value("S"))
+            .andExpect(jsonPath("$.transactionId").value("transactionId"))
+            .andExpect(jsonPath("$.amount").value(12345))
+            .andExpect(jsonPath("$.transactionType").value("USE"));
     }
 }
