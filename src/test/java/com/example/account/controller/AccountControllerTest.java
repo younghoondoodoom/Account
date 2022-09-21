@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.account.domain.Account;
 import com.example.account.dto.AccountDto;
 import com.example.account.dto.CreateAccount.Request;
 import com.example.account.dto.DeleteAccount;
@@ -117,4 +118,5 @@ class AccountControllerTest {
             .andExpect(jsonPath("$[2].balance").value(3000))
             .andDo(print());
     }
+
 }

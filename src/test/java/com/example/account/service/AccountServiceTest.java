@@ -293,7 +293,7 @@ class AccountServiceTest {
     }
 
     @Test
-    public void sucessGetAccountByUserId() throws Exception {
+    public void successGetAccountByUserId() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
             .id(12L)
