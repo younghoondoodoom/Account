@@ -58,9 +58,9 @@ class TransactionServiceTest {
     public void successUseBalance() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
             .accountUser(user)
             .accountStatus(IN_USE)
@@ -118,9 +118,9 @@ class TransactionServiceTest {
     public void useBalanceFailed_AccountNotFound() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -140,13 +140,13 @@ class TransactionServiceTest {
     public void useBalanceFailed_userUnMatch() throws Exception {
         //given
         AccountUser pobi = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        pobi.setId(12L);
         AccountUser harry = AccountUser.builder()
-            .id(13L)
             .name("Harry")
             .build();
+        harry.setId(13L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(pobi));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -171,9 +171,9 @@ class TransactionServiceTest {
     public void useBalanceFailed_alreadyUnregistered() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -200,9 +200,9 @@ class TransactionServiceTest {
     public void exceedAmount_UseBalance() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
             .accountUser(user)
             .accountStatus(IN_USE)
@@ -228,9 +228,9 @@ class TransactionServiceTest {
     public void saveFailedUseTransaction() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
             .accountUser(user)
             .accountStatus(IN_USE)
@@ -266,17 +266,16 @@ class TransactionServiceTest {
     public void successCancelBalance() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
-            .id(1L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000012")
             .build();
-
+        account.setId(1L);
         Transaction transaction = Transaction.builder()
             .account(account)
             .transactionType(USE)
@@ -363,23 +362,23 @@ class TransactionServiceTest {
         throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
-            .id(1L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000012")
             .build();
+        account.setId(1L);
         Account accountNotUse = Account.builder()
-            .id(2L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000013")
             .build();
+        accountNotUse.setId(2L);
         Transaction transaction = Transaction.builder()
             .account(account)
             .transactionType(USE)
@@ -410,16 +409,16 @@ class TransactionServiceTest {
         throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
-            .id(1L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000012")
             .build();
+        account.setId(1L);
         Transaction transaction = Transaction.builder()
             .account(account)
             .transactionType(USE)
@@ -450,16 +449,16 @@ class TransactionServiceTest {
         throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
-            .id(1L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000012")
             .build();
+        account.setId(1L);
         Transaction transaction = Transaction.builder()
             .account(account)
             .transactionType(USE)
@@ -488,16 +487,16 @@ class TransactionServiceTest {
     public void successQueryTransaction() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         Account account = Account.builder()
-            .id(1L)
             .accountUser(user)
             .accountStatus(IN_USE)
             .balance(10000L)
             .accountNumber("1000000012")
             .build();
+        account.setId(1L);
         Transaction transaction = Transaction.builder()
             .account(account)
             .transactionType(USE)

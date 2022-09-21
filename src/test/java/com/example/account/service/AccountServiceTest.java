@@ -44,9 +44,9 @@ class AccountServiceTest {
     public void createAccountSuccess() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findFirstByOrderByIdDesc())
@@ -74,9 +74,9 @@ class AccountServiceTest {
     public void createFirstAccountSuccess() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(15L)
             .name("Pobi")
             .build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findFirstByOrderByIdDesc())
@@ -118,9 +118,9 @@ class AccountServiceTest {
     public void createAccount_maxAccountIs10() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(15L)
             .name("Pobi")
             .build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.countAccountByAccountUser(user))
@@ -139,9 +139,9 @@ class AccountServiceTest {
     public void deleteAccountSuccess() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -188,9 +188,9 @@ class AccountServiceTest {
     public void deleteAccountFailed_AccountNotFound() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -210,13 +210,13 @@ class AccountServiceTest {
     public void deleteAccountFailed_userUnMatch() throws Exception {
         //given
         AccountUser pobi = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        pobi.setId(12L);
         AccountUser harry = AccountUser.builder()
-            .id(13L)
             .name("Harry")
             .build();
+        harry.setId(13L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(pobi));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -241,9 +241,9 @@ class AccountServiceTest {
     public void deleteAccountFailed_balanceNotEmpty() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -268,9 +268,9 @@ class AccountServiceTest {
     public void deleteAccountFailed_alreadyUnregistered() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
             .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -296,9 +296,9 @@ class AccountServiceTest {
     public void successGetAccountByUserId() throws Exception {
         //given
         AccountUser user = AccountUser.builder()
-            .id(12L)
             .name("Pobi")
             .build();
+        user.setId(12L);
         List<Account> accounts = Arrays.asList(
             Account.builder()
                 .accountUser(user)
